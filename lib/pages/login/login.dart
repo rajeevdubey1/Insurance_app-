@@ -14,6 +14,7 @@ class _LoginPageState extends State<LoginPage> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   bool rememberUser = false;
+   bool isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -165,9 +166,29 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Widget _buildLoginbutton() {
-    return ElevatedButton(
+    return isLoading ? const Center(
+      child: CircularProgressIndicator(),
+    ) : ElevatedButton(
       onPressed: () {
-        Navigator.of(context).push(MaterialPageRoute(builder: (context) =>const PlanPage()));
+        if(emailController.text == 'rajeev@click2secure.me' && passwordController.text == '123456'){ 
+          // start loading indecator when redirecting to plan page
+          setState(() {
+          isLoading = true;
+        });
+
+          // redirect to plan page after 1000 milisecond
+          Future.delayed(const Duration(milliseconds: 1000), () {
+            Navigator.of(context).push(MaterialPageRoute(builder: (context) =>const PlanPage(),),);
+          });
+        }
+        else
+        {
+          // reset email and password fields and show error message
+          emailController.clear();
+          passwordController.clear();
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Please enter correct details!'), backgroundColor: Colors.red,),);
+        }
+        
       },
       style: ElevatedButton.styleFrom(
         shape: const StadiumBorder(),

@@ -9,6 +9,7 @@ class PlanPage extends StatelessWidget {
       appBar: AppBar(
         title:const Text('Select plan', style: TextStyle(fontSize: 21),),
         backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+        automaticallyImplyLeading: false,// hide back button from the plan list page
       ),
     );
   }
